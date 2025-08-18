@@ -1,0 +1,21 @@
+services:
+  serena:
+    image: ghcr.io/oraios/serena:latest  # 使用するDockerイメージ
+    networks:
+      - serena-isolated  # 隔離ネットワークに接続
+    volumes:
+      # 📝 ここを各プロジェクトに合わせて変更
+      - ../your-project:/workspace/your-project:ro  # your-projectをバインドマウント :ro=読み取り専用
+      - ./.serena:/home/serena/.serena:rw  # Serena設定永続化 設定の永続化 :rw=読み書き可能
+    environment:
+      - SERENA_DOCKER=1 # この環境変数により、Serena は Docker 環境での実行を認識し、適切な設定とパス解決を行う
+    tty: true # TTYを有効にして、対話的な操作を可能にする
+    security_opt:
+      - no-new-privileges:true  # 特権昇格を防止（セキュリティ強化）
+    cap_drop:
+      - ALL  # すべてのLinux capabilityを削除（最小権限の原則）
+
+networks:
+  serena-isolated:
+    driver: bridge  # コンテナ間は通信可能
+    internal: true  # 外部通信完全遮断（trueで遮断、falseで許可）
