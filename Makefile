@@ -1,12 +1,12 @@
 .PHONY: up down restart
 
-up: .serena
-	docker compose up -d
+up:
+	@if [ -z "$(PROJECT)" ]; then echo "Usage: make up PROJECT=/path/to/project"; exit 1; fi
+	mkdir -p $(PROJECT)/.serena
+	PROJECT=$(PROJECT) docker compose up -d
 
 down:
-	docker compose down
+	@if [ -z "$(PROJECT)" ]; then echo "Usage: make down PROJECT=/path/to/project"; exit 1; fi
+	PROJECT=$(PROJECT) docker compose down
 
 restart: down up
-
-.serena:
-	mkdir -p .serena

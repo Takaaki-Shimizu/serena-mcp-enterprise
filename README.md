@@ -22,15 +22,15 @@
 git clone https://github.com/Takaaki-Shimizu/serena-mcp-enterprise
 cd serena-mcp-enterprise
 
-# 2. プロジェクトパスを設定
-# ./compose.yaml を編集
-# - ../your-project:/workspace/your-project:ro
-# を実際のプロジェクトパスに変更
-
-# 3. 起動
-make up
+# 2. 起動（プロジェクトパスを指定）
+make up PROJECT=/path/to/your/project
 
 # その他のコマンド
-make down     # 停止・削除
-make restart  # 再起動
+make down PROJECT=/path/to/your/project     # 停止・削除
+make restart PROJECT=/path/to/your/project  # 再起動
 ```
+
+### 動作について
+
+- 指定したプロジェクトディレクトリがDockerコンテナ内の `/workspace` にマウントされます
+- `.serena` ディレクトリは自動的にプロジェクトディレクトリ内に作成されます
