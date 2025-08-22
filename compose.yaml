@@ -4,9 +4,9 @@ services:
     networks:
       - serena-isolated  # 隔離ネットワークに接続
     volumes:
-      # 📝 ここを各プロジェクトに合わせて変更
-      - ../your-project:/workspace/your-project:ro  # your-projectをバインドマウント :ro=読み取り専用
-      - ./.serena:/home/serena/.serena:rw  # Serena設定永続化 設定の永続化 :rw=読み書き可能
+      # 📝 PROJECT環境変数で指定されたパスをマウント
+      - ${PROJECT}:/workspace:ro  # プロジェクトをバインドマウント :ro=読み取り専用
+      - ${PROJECT}/.serena:/home/serena/.serena:rw  # プロジェクト内のSerena設定永続化
     environment:
       - SERENA_DOCKER=1 # この環境変数により、Serena は Docker 環境での実行を認識し、適切な設定とパス解決を行う
     tty: true # TTYを有効にして、対話的な操作を可能にする

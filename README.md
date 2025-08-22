@@ -1,9 +1,11 @@
 # Serena MCP Enterprise Docker Environment
 
 ## 概要
+
 企業セキュリティ要件を満たすSerena MCPサーバーのDocker環境です。
 
 ## セキュリティ要件適合状況
+
 ✅ **6/6項目完全適合**
 
 1. ✅ AIの学習に使用されないこと
@@ -14,16 +16,37 @@
 6. ✅ 外部サーバーに情報を送信していないこと
 
 ## クイックスタート
+
+### 方法1: Claude Code で使用する場合（推奨）
+
 ```bash
-# 1. リポジトリクローン
-git clone [your-repo-url]
+# 1. リポジトリをクローン
+git clone https://github.com/Takaaki-Shimizu/serena-mcp-enterprise
+
+# 2. プロジェクトディレクトリで Claude MCP を登録（一度だけ実行）
+cd /path/to/your/project
+claude mcp add serena -- sh -c "cd /path/to/serena-mcp-enterprise && make up PROJECT=/path/to/your/project > /dev/null 2>&1 && docker exec -i serena-mcp-enterprise-serena-1 serena-mcp-server --transport stdio --project /workspace"
+
+# 3. Claude Code を起動
+claude
+```
+
+### 方法2: Docker Compose を直接使用する場合
+
+```bash
+# 1. リポジトリをクローン
+git clone https://github.com/Takaaki-Shimizu/serena-mcp-enterprise
 cd serena-mcp-enterprise
 
-# 2. プロジェクト配置
-# あなたのプロジェクトを ../your-project/ に配置
+# 2. 起動（プロジェクトパスを指定）
+make up PROJECT=/path/to/your/project
 
-# 3. 設定調整（必要に応じて）
-# compose.yamlのvolumesパスを確認
+# その他のコマンド
+make down PROJECT=/path/to/your/project     # 停止・削除
+make restart PROJECT=/path/to/your/project  # 再起動
+```
 
-# 4. 起動
-docker-compose up -d
+### 動作について
+
+- 指定したプロジェクトディレクトリがDockerコンテナ内の `/workspace` にマウントされます
+- `.serena` ディレクトリは自動的にプロジェクトディレクトリ内に作成されます
