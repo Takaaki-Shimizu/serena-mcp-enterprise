@@ -17,6 +17,22 @@
 
 ## クイックスタート
 
+### 方法1: Claude Code で使用する場合（推奨）
+
+```bash
+# 1. リポジトリをクローン
+git clone https://github.com/Takaaki-Shimizu/serena-mcp-enterprise
+
+# 2. プロジェクトディレクトリで Claude MCP を登録（一度だけ実行）
+cd /path/to/your/project
+claude mcp add serena -- sh -c "cd /path/to/serena-mcp-enterprise && make up PROJECT=/path/to/your/project > /dev/null 2>&1 && docker exec -i serena-mcp-enterprise-serena-1 serena-mcp-server --transport stdio --project /workspace"
+
+# 3. Claude Code を起動
+claude
+```
+
+### 方法2: Docker Compose を直接使用する場合
+
 ```bash
 # 1. リポジトリをクローン
 git clone https://github.com/Takaaki-Shimizu/serena-mcp-enterprise
