@@ -29,6 +29,9 @@ claude mcp add serena -- sh -c "cd /path/to/serena-mcp-enterprise && make up PRO
 
 # 3. Claude Code を起動
 claude
+
+# 4. リポジトリ初期解析
+/mcp__serena__initial_instructions
 ```
 
 ### 方法2: Docker Compose を直接使用する場合
