@@ -5,8 +5,7 @@ services:
       - serena-isolated  # 隔離ネットワークに接続
     volumes:
       # 📝 PROJECT環境変数で指定されたパスをマウント
-      - ${PROJECT}:/workspace:ro  # プロジェクトをバインドマウント :ro=読み取り専用
-      - ${PROJECT}/.serena:/home/serena/.serena:rw  # プロジェクト内のSerena設定永続化
+      - ${PROJECT}:/workspace:rw  # プロジェクトをバインドマウント
     environment:
       - SERENA_DOCKER=1 # この環境変数により、Serena は Docker 環境での実行を認識し、適切な設定とパス解決を行う
     tty: true # TTYを有効にして、対話的な操作を可能にする
