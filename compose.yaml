@@ -1,5 +1,6 @@
 services:
   serena:
+    build: ./
     image: ghcr.io/oraios/serena:latest  # 使用するDockerイメージ
     networks:
       - serena-isolated  # 隔離ネットワークに接続
