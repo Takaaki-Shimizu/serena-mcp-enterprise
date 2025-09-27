@@ -1,15 +1,23 @@
 services:
   serena:
-    build: ./
-    image: ghcr.io/oraios/serena:latest  # 使用するDockerイメージ
+    image: serena-enterprise:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
     networks:
       - serena-isolated  # 隔離ネットワークに接続
     volumes:
       # 📝 PROJECT環境変数で指定されたパスをマウント
       - ${PROJECT}:/workspace:rw  # プロジェクトをバインドマウント
+      - ${PROJECT}/.serena:/home/serena/.serena:rw  # プロジェクト内のSerena設定永続化
     environment:
       - SERENA_DOCKER=1 # この環境変数により、Serena は Docker 環境での実行を認識し、適切な設定とパス解決を行う
+    # ENTRYPOINTを無効化
+    entrypoint: []
+    # Serenaを直接実行
+    command: ["serena-mcp-server", "--transport", "stdio"]
     tty: true # TTYを有効にして、対話的な操作を可能にする
+    stdin_open: true  # 標準入力を開いたままにする（stdioモード用）
     security_opt:
       - no-new-privileges:true  # 特権昇格を防止（セキュリティ強化）
     cap_drop:
